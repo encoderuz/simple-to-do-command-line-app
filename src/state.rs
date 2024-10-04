@@ -10,18 +10,8 @@ pub fn read_file(file_name: &str) -> Map<String, Value> {
     let mut data = String::new();
     file.read_to_string(&mut data).unwrap();
     let json: Value = serde_json::from_str(&data).unwrap();
-
-    let state: Map<String, Value> = match file {
-        Ok(mut file) => {
-            file.read_to_string(&mut data).unwrap();
-            let json: Value = serde_json::from_str(&data).unwrap();
-            json.as_object().unwrap().clone()
-        },
-        Err(_) => {
-            // Return an empty state if the file does not exist
-           println!("Error occurred ------------------------------------");
-        }
-    };
+    let state: Map<String, Value> = json.as_object()
+        .unwrap().clone();
     state
 }
 
